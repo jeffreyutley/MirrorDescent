@@ -1,15 +1,14 @@
-.. docs-include-ref
-
 MirrorDescent
-========
-
-..
-    Change the number of = to match the number of characters in the project name.
+=============
 
 An implementation of Mirror Descent from Chapter 9 of "First-Order Methods in Optimization" by Amir Beck
 
-..
-    Include more detailed description here.
+This is the final project for MA 75400 at Purdue University (course webpage
+https://www.math.purdue.edu/~zhan1966/teaching/574/index.html), taught by Prof. Xiangxiong Zhang. The demo files
+contain examples of Mirror Descent.
+
+This GitHub repository is based on the package_template repository (https://github.com/gbuzzard/package_template)
+created by Prof. Greg Buzzard at Purdue University.
 
 Installing
 ----------
