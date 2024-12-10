@@ -46,9 +46,11 @@ mirror_descent_values, function_values = MirrorDescent.mirror_descent(x_0, Mirro
                                                                       num_iter, f_derivative=f_derivative)
 
 # find derivative value norms at each mirror descent value:
-derivative_norms = np.zeros((num_iter, ))
-for idx in range(derivative_norms.shape[0]):
-    derivative_norms[idx] = np.linalg.norm(f_derivative(mirror_descent_values[idx]))
+derivative_2_norms = np.zeros((num_iter,))
+derivative_1_norms = np.zeros((num_iter, ))
+for idx in range(derivative_2_norms.shape[0]):
+    derivative_2_norms[idx] = np.linalg.norm(f_derivative(mirror_descent_values[idx]))
+    derivative_1_norms[idx] = np.linalg.norm(f_derivative(mirror_descent_values[idx]), ord=1)
 
 # plot of function values
 plt.plot(function_values)
@@ -59,13 +61,24 @@ plt.yscale('log')
 plt.xscale('log')
 plt.savefig('./output/Example_9.10_function_values.png')
 
-# plot of norm of derivative values
+# plot of 2-norm of derivative values
 matplotlib.rcParams['agg.path.chunksize'] = 10000
 plt.figure()
-plt.plot(derivative_norms)
+plt.plot(derivative_2_norms)
 plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_2 = \\|A^T(Ax^{(k)}-b)\\|_2$ from Mirror Descent")
 plt.xlabel("k")
 plt.ylabel("$\\|\\nabla_x f(x^{(k)})\\|_2$")
 plt.yscale('log')
 plt.xscale('log')
-plt.savefig('./output/Example_9.10_derivative_values.png')
+plt.savefig('./output/Example_9.10_derivative_2_norms.png')
+
+# plot of 1-norm of derivative values
+matplotlib.rcParams['agg.path.chunksize'] = 10000
+plt.figure()
+plt.plot(derivative_1_norms)
+plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_1 = \\|A^T(Ax^{(k)}-b)\\|_1$ from Mirror Descent")
+plt.xlabel("k")
+plt.ylabel("$\\|\\nabla_x f(x^{(k)})\\|_1$")
+plt.yscale('log')
+plt.xscale('log')
+plt.savefig('./output/Example_9.10_derivative_1_norms.png')
