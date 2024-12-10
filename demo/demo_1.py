@@ -39,14 +39,33 @@ def f_derivative(x):
 x_0 = np.abs(np.random.normal(size=(n, )))
 x_0 /= np.sum(x_0)
 
+num_iter = 1_000_000
+
 # run Mirror descent with negative entropy Bergman distance L_1 norm
 mirror_descent_values, function_values = MirrorDescent.mirror_descent(x_0, MirrorDescent.negative_entropy_update, f,
-                                                                      1_000_000, f_derivative=f_derivative)
+                                                                      num_iter, f_derivative=f_derivative)
 
+# find derivative value norms at each mirror descent value:
+derivative_norms = np.zeros((num_iter, ))
+for idx in range(derivative_norms.shape[0]):
+    derivative_norms[idx] = np.linalg.norm(f_derivative(mirror_descent_values[idx]))
+
+# plot of function values
 plt.plot(function_values)
-plt.title("Values $\\|Ax^{(k)}-b\\|$ from Mirror Descent")
+plt.title("Values $\\|Ax^{(k)}-b\\|_2$ from Mirror Descent")
 plt.xlabel("k")
-plt.ylabel("$\\|Ax^{(k)}-b\\|$")
+plt.ylabel("$\\|Ax^{(k)}-b\\|_2$")
 plt.yscale('log')
 plt.xscale('log')
-plt.show()
+plt.savefig('./output/Example_9.10_function_values.png')
+
+# plot of norm of derivative values
+matplotlib.rcParams['agg.path.chunksize'] = 10000
+plt.figure()
+plt.plot(derivative_norms)
+plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_2 = \\|A^T(Ax^{(k)}-b)\\|_2$ from Mirror Descent")
+plt.xlabel("k")
+plt.ylabel("$\\|\\nabla_x f(x^{(k)})\\|_2$")
+plt.yscale('log')
+plt.xscale('log')
+plt.savefig('./output/Example_9.10_derivative_values.png')
