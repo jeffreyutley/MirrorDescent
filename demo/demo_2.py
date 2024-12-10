@@ -27,12 +27,24 @@ y_new = np.linalg.solve(A, b)                   # solution
 
 # objective function
 def f(x):
-    return 0.5 * np.linalg.norm(np.dot(A, x) - b)
+    return np.linalg.norm(np.dot(A, x) - b, ord=1)
 
 
 # derivative of objective function
 def f_derivative(x):
-    return np.dot(A.T, np.dot(A, x) - b)
+    error = np.dot(A, x) - b
+    n = len(error)
+    sign = np.zeros((n, ))
+
+    for idx in range(n):
+        if error[idx] > 0:
+            sign[idx] = 1
+        elif error[idx] < 0:
+            sign[idx] = -1
+        else:
+            sign[idx] = 0
+
+    return np.dot(A.T, sign)
 
 
 # random initial guess
@@ -56,34 +68,34 @@ for idx in range(derivative_2_norms.shape[0]):
 
 # plot of function values
 plt.plot(function_values)
-plt.title("Values $\\|Ax^{(k)}-b\\|_2$ from Mirror Descent")
+plt.title("Values $\\|Ax^{(k)}-b\\|_1$ from Mirror Descent")
 plt.xlabel("k")
-plt.ylabel("$\\|Ax^{(k)}-b\\|_2$")
+plt.ylabel("$\\|Ax^{(k)}-b\\|_1$")
 plt.yscale('log')
 plt.xscale('log')
-plt.savefig('./output/Example_9.10_function_values.png')
+plt.savefig('./output/Example_9.19_function_values.png')
 
 # plot of 2-norm of derivative values
 matplotlib.rcParams['agg.path.chunksize'] = 10000
 plt.figure()
 plt.plot(derivative_2_norms)
-plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_2 = \\|A^T(Ax^{(k)}-b)\\|_2$ from Mirror Descent")
+plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_2 = \\|A^T sign(Ax^{(k)}-b)\\|_2$ from Mirror Descent")
 plt.xlabel("k")
 plt.ylabel("$\\|\\nabla_x f(x^{(k)})\\|_2$")
 plt.yscale('log')
 plt.xscale('log')
-plt.savefig('./output/Example_9.10_derivative_2_norms.png')
+plt.savefig('./output/Example_9.19_derivative_2_norms.png')
 
 # plot of 1-norm of derivative values
 matplotlib.rcParams['agg.path.chunksize'] = 10000
 plt.figure()
 plt.plot(derivative_1_norms)
-plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_1 = \\|A^T(Ax^{(k)}-b)\\|_1$ from Mirror Descent")
+plt.title("Derivative Values $\\|\\nabla_x f(x^{(k)})\\|_1 = \\|A^T sign(Ax^{(k)}-b)\\|_1$ from Mirror Descent")
 plt.xlabel("k")
 plt.ylabel("$\\|\\nabla_x f(x^{(k)})\\|_1$")
 plt.yscale('log')
 plt.xscale('log')
-plt.savefig('./output/Example_9.10_derivative_1_norms.png')
+plt.savefig('./output/Example_9.19_derivative_1_norms.png')
 
 # plot of the 2-norm of the absolute errors
 matplotlib.rcParams['agg.path.chunksize'] = 10000
@@ -94,4 +106,4 @@ plt.xlabel("k")
 plt.ylabel("$\\|x^{(k)} - x_*\\|_2$")
 plt.yscale('log')
 plt.xscale('log')
-plt.savefig('./output/Example_9.10_absolute_errors.png')
+plt.savefig('./output/Example_9.19_absolute_errors.png')
