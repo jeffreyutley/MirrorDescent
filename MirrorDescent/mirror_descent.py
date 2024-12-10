@@ -2,21 +2,11 @@ import numpy as np
 
 
 def mirror_descent(x_0, update_function, f, max_num_iter, tol=None, x_true=None, **kwargs):
-    """Runs mirror descent for a specific problem until convergence or the maximum number of iterations is met.
-
-    :param x_0: Numpy 1-D array containing the initial guess
-    :param update_function: (function)
-    :param max_num_iter:
-    :param tol:
-    :param x_true:
-    :return:
-    """
+    """Runs mirror descent for a specific problem until convergence or the maximum number of iterations is met."""
 
     check_convergence = (tol is not None) * (x_true is not None)
 
     x = x_0
-
-    num_iterations = 0
 
     x_values = np.zeros((max_num_iter, len(x)))
     function_values = np.zeros((max_num_iter, ))
@@ -35,10 +25,12 @@ def mirror_descent(x_0, update_function, f, max_num_iter, tol=None, x_true=None,
 
 
 def negative_entropy_step_size(iteration, x, f_derivative):
+    """Step-size for Mirror Descent with the negative entropy Bergman distance"""
     return np.sqrt(2) / (np.linalg.norm(f_derivative(x), ord=np.inf) * np.sqrt(iteration+1))
 
 
 def negative_entropy_update(iteration, x, **kwargs):
+    """Mirror Descent iterative update for the negative entropy Bergman distance"""
     assert ('f_derivative' in kwargs.keys())
 
     f_derivative = kwargs['f_derivative']
