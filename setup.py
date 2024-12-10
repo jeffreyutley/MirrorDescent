@@ -8,8 +8,8 @@ DESCR = 'An implementation of Mirror Descent from Chapter 9 of ``First-Order Met
 REQUIRES = ['numpy']
 LICENSE = "BSD-3-Clause"
 
-AUTHOR = 'MirrorDescent development team'
-EMAIL = "buzzard@purdue.edu"
+AUTHOR = 'Jeffrey Utley'
+EMAIL = "jeffrey.utley@gmail.com"
 PACKAGE_DIR = "MirrorDescent"
 
 setup(install_requires=REQUIRES,
