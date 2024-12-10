@@ -5,6 +5,10 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
+
+"""Implements examples 9.9 and 9.10 from Chapter 9 of ``First-Order Methods in Optimization`` by Amir Beck, where the
+function f is chosen to be f(x) = ||Ax - b||_2 and the set C is chosen to be the simplex in R^n."""
+
 # size of the problem
 n = 10
 
